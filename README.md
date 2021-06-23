@@ -1,15 +1,15 @@
 # FP_DataWarehouseSakila2021_18082010028
-Final Project Pengembangan Data Warehouse dan Dashboard WHsakila2021
-Dibuat oleh Kelompok 
-Program Studi Sistem Informasi
-Fakultas Ilmu Komputer
-UPN "Veteran" Jawa Timur
-Nama Ketua :
-Ahmad Nashirul Haq (18082010028)
-Nama Anggota :
-Nur Hasan Assobarry (18082010007)
-Khusnia Nur Rachmah (18082010008)
-
+Final Project Pengembangan Data Warehouse dan Dashboard WHsakila2021<br/>
+Dibuat oleh Kelompok <br/>
+Program Studi Sistem Informasi <br/>
+Fakultas Ilmu Komputer <br/>
+UPN "Veteran" Jawa Timur<br/>
+Nama Ketua :<br/>
+Ahmad Nashirul Haq (18082010028)<br/>
+Nama Anggota :<br/>
+Nur Hasan Assobarry (18082010007)<br/>
+Khusnia Nur Rachmah (18082010008)<br/>
+<br/>
 Langkah-langkah yang dibutuhkan untuk menjalankan app dengan baik :
 1. Install database server: MySql (disini kami menggunakan Xampp versi terbaru).
 2. Install software mysql management: phpMyAdmin dari Xampp (ATAU YG LAIN).
