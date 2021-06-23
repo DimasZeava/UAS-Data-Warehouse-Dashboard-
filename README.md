@@ -11,8 +11,8 @@ Nur Hasan Assobarry (18082010007)
 Khusnia Nur Rachmah (18082010008)
 
 Langkah-langkah yang dibutuhkan untuk menjalankan app dengan baik :
-1. Langkah Persiapan :
-  a. Install database server: MySql (disini kami menggunakan Xampp versi terbaru).
+1. Langkah Persiapan :\n
+  a. Install database server: MySql (disini kami menggunakan Xampp versi terbaru). \n
   b. Install software mysql management: phpMyAdmin dari Xampp (ATAU YG LAIN).
 2. Extract FP_DataWarehouseSakila2021_18082010028.zip pada folder htdocs XAMPP (xampp/htdocs).
 3. Jalankan Xampp control panel.
