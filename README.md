@@ -14,11 +14,11 @@ Langkah-langkah yang dibutuhkan untuk menjalankan app dengan baik :
 1. Langkah Persiapan :
   a. Install database server: MySql (disini kami menggunakan Xampp versi terbaru).
   b. Install software mysql management: phpMyAdmin dari Xampp (ATAU YG LAIN).
-  c. Copy file sampel data: sakila.sql dan whsakila2021.sql.
-  e. Buat database dengan nama sakila.
-  f. Import file sakila.sql ke dalam database sakila.
-  g. Buat database dengan nama whsakila2021.
-  h. Import file whsakila2021.sql ke dalam database whsakila2021.
-2. Extract mondrian.zip ke dalam server Tomcat bawaan dari XAMPP (xampp/tomcat/webapps).
-3. 
-4. 
+2. Extract FP_DataWarehouseSakila2021_18082010028.zip pada folder htdocs XAMPP (xampp/htdocs).
+3. Jalankan Xampp control panel.
+4. Start apache dan mysql server.
+5. Buka phpMyAdmin (localhost/phpmyadmin).
+6. Buat database dengan nama whsakila2021.
+7. Import file whsakila2021.sql ke dalam database whsakila2021.
+8. Download dan Extract mondrian_18082010028.zip dari link https://bit.ly/mondrianwhsakilaanashaq ke dalam server Tomcat bawaan dari XAMPP (xampp/tomcat/webapps).
+9. Jalankan aplikasi dengan mengakses http://localhost/FP_DataWarehouseSakila2021_18082010028
