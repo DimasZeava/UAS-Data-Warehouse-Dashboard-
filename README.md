@@ -13,7 +13,7 @@ Khusnia Nur Rachmah (18082010008)<br/>
 Langkah-langkah yang dibutuhkan untuk menjalankan app dengan baik :
 1. Install database server: MySql (disini kami menggunakan Xampp versi terbaru).
 2. Install software mysql management: phpMyAdmin dari Xampp (ATAU YG LAIN).
-3. Extract FP_DataWarehouseSakila2021_18082010028.zip pada folder htdocs XAMPP (xampp/htdocs).
+3. Extract FP_DWO_KELOMPOK_5.zip pada folder htdocs XAMPP (xampp/htdocs).
 4. Jalankan Xampp control panel.
 5. Start apache dan mysql server.
 6. Buka phpMyAdmin (localhost/phpmyadmin).
