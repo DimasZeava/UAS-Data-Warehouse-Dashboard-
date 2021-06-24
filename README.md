@@ -1,6 +1,6 @@
 # FP_DWO_KELOMPOK_5
 Final Project Pengembangan Data Warehouse dan Dashboard WHsakila2021<br/>
-Dibuat oleh Kelompok <br/>
+Dibuat oleh Kelompok 5 <br/>
 Program Studi Sistem Informasi <br/>
 Fakultas Ilmu Komputer <br/>
 UPN "Veteran" Jawa Timur<br/>
