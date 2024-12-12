@@ -6,7 +6,7 @@
          <div class="sidebar-brand-icon rotate-n-15">
          <i class="fas fa-film"></i>
          </div>
-         <div class="sidebar-brand-text mx-3">Sakila</div>
+         <div class="sidebar-brand-text mx-3">Adventure Works</div>
      </a>
 
      <!-- Divider -->
@@ -14,41 +14,41 @@
 
      <!-- Heading User Profile-->
      <div class="sidebar-heading">
-         Grafik Data Rental Film Sakila
+         Grafik Data AdventureWorks
      </div>
 
      <!-- Nav Item - My Profile -->
      <li class="nav-item">
          <a class="nav-link" href="linechart.php">
          <i class="fas fa-shopping-cart"></i>
-             <span>Data Film Terlaris</span></a>
+             <span>Data Penjualan Tiap Tahun</span></a>
      </li>
 
      <li class="nav-item">
          <a class="nav-link" href="linechart2.php">
          <i class="far fa-clock"></i>
-             <span>Data Lama Pinjam Setiap Kategori Film</span></a>
+             <span>Data Penjualan Berdasarkan Metode Pembayaran</span></a>
      </li>
 
      <!-- Nav Item - Edit Profile -->
      <li class="nav-item">
          <a class="nav-link" href="barchart.php">
          <i class="fas fa-money-bill"></i>
-             <span>Data Pendapatan Toko</span></a>
+             <span>Data Penjualan Tiap Kategori di Berbagai wilayah</span></a>
      </li>
 
      <!-- Nav Item - Edit Profile -->
      <li class="nav-item">
          <a class="nav-link" href="barchart2.php">
          <i class="fas fa-tasks"></i>
-             <span>Data Jumlah Customer dari Setiap Kategori</span></a>
+             <span>Total Penjualan Tipe Pelanggan</span></a>
      </li>
 
           <!-- Nav Item - Edit Profile -->
     <li class="nav-item">
          <a class="nav-link" href="donatchart.php">
          <i class="fas fa-money-bill-alt"></i>
-             <span>Data Pendapatan dari Setiap Kategori</span></a>
+             <span>Persentase Peningkatan Penjualan Tahunan di Berbagai Wilayah</span></a>
      </li>
 
     <!-- Divider -->

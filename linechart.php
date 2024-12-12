@@ -31,33 +31,40 @@
 
 <body id="page-top">
 
-<?php 
-//data barchart
-include 'data3.php';
+    <?php
+    include 'data3.php';
+    $data3 = json_decode($data3, true);
 
-$data3 = json_decode($data3, TRUE);
+    // Extract unique years
+    $years = array_unique(array_column($data3, 'Tahun'));
+    sort($years);
 
-?>
+    // Reorganize data by year and month
+    usort($data3, function ($a, $b) {
+        return $a['Tahun'] <=> $b['Tahun'];
+    });
+    ?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include "sidebar.php";?>
+        <?php include "sidebar.php"; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
+            <p class="highcharts-description">
+                Berikut merupakan grafik untuk menampilkan total pendapatan setiap tahunnya dari AdventureWorks.
+            </p>
             <div id="content">
 
                 <!-- Begin Page Content -->
-                
+
                 <div id="linechart" class="grafik"></div>
-                <p class="highcharts-description">
-                Berikut merupakan grafik untuk menampilkan film terlaris pada rental film Sakila.
-                </p>
+
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
@@ -66,7 +73,7 @@ $data3 = json_decode($data3, TRUE);
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dashboard WHSakila2021</span>
+                        <span>Copyright &copy; Dashboard AdventureWorks</span>
                     </div>
                 </div>
             </footer>
@@ -82,62 +89,69 @@ $data3 = json_decode($data3, TRUE);
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
 
-    <script type="text/javascript">
-        //create linechart
-        Highcharts.chart('linechart', {
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'Data Film Terlaris'
-            },
-            subtitle: {
-                text: 'Source: Database WHSakila2021'
-            },
-            xAxis: {
-                categories: [
-                    <?php for ($i=0; $i < count($data3); $i++):?>
-                        <?= $data3[$i]["bulan"]; ?>,
-                    <?php endfor;?>
-                ]
-            },
-            yAxis: {
-                title: {
-                    text: 'Banyaknya sewa'
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
+        <script type="text/javascript">
+            // Create linechart
+            document.addEventListener('DOMContentLoaded', function() {
+                Highcharts.chart('linechart', {
+                    chart: {
+                        type: 'line'
                     },
-                    enableMouseTracking: false
-                }
-            },
-            series: [
-                <?php for ($i=0; $i < count($data3); $i+=5):?>
-                {
-                name: '<?= $data3[$i]["kategori"]; ?>',
-                data: [
-                    <?php for ($a=$i; $a < $i+5; $a++):?>
-                        <?= $data3[$a]["pendapatan"]; ?>,
-                    <?php endfor;?>
+                    title: {
+                        text: 'Penjualan Tiap Tahunnya'
+                    },
+                    xAxis: {
+                        categories: [
+                            <?php
+                            echo implode(",", array_map(function ($year) {
+                                return "'" . $year . "'";
+                            }, $years));
+                            ?>
+                        ]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Total Penjualan'
+                        }
+                    },
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true
+                            },
+                            enableMouseTracking: false
+                        }
+                    },
+                    series: [
+                        <?php
+                        $months = array_unique(array_column($data3, 'Tahun'));
+                        foreach ($months as $month) {
+                            $data = [];
+                            foreach ($years as $year) {
+                                $value = 0;
+                                foreach ($data3 as $item) {
+                                    if ($item['Tahun'] == $year) {
+                                        $value = $item['TotalPenjualan'];
+                                        break;
+                                    }
+                                }
+                                $data[] = $value;
+                            }
+                            echo "{ name: '$month', data: [" . implode(",", $data) . "] },";
+                        }
+                        ?>
                     ]
-                },
-                <?php endfor;?>
-            ]
-        });
-    </script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+                });
+            });
+        </script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/js/sb-admin-2.min.js"></script>
-
+        <!-- Custom scripts for all pages-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/js/sb-admin-2.min.js"></script>
 
 </body>
 

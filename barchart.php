@@ -59,7 +59,7 @@ $data2 = json_decode($data2, TRUE);
                 
                 <div id="barchart" class="grafik"></div>
                 <p class="highcharts-description">
-                Berikut merupakan grafik untuk menampilkan pendapatan dari setiap Toko berdasarkan nama kota pada rental film Sakila.
+                Berikut merupakan grafik untuk menampilkan total penjualan setiap tahunnya pada data AdventureWorks.
                 </p>
                 <!-- /.container-fluid -->
 
@@ -70,7 +70,7 @@ $data2 = json_decode($data2, TRUE);
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dashboard WHSakila2021</span>
+                        <span>Copyright &copy; Dashboard AdventureWorks</span>
                     </div>
                 </div>
             </footer>
