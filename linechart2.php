@@ -9,17 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard WHSakila2021</title>
+    <title>Dashboard WHAdventureWorks</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/styleGraph.css">
-
+    <!-- Highcharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
@@ -32,18 +31,43 @@
 <body id="page-top">
 
 <?php 
-//data barchart
 include 'data7.php';
 
+// Decode JSON data from `data7.php`
 $data7 = json_decode($data7, TRUE);
 
+// Check if data is valid
+if (!$data7) {
+    echo '<p>Data tidak valid atau tidak tersedia.</p>';
+    exit;
+}
+
+// Prepare data for the chart
+$years = [];
+$paymentData = [];
+
+foreach ($data7 as $entry) {
+    $year = $entry['Tahun'];
+    $payment = $entry['Pembayaran'];
+    $total = $entry['TotalPenjualan'];
+
+    $years[$year] = $year; // Collect unique years
+    $paymentData[$payment][$year] = (float)$total; // Store total sales by payment method and year
+}
+
+// Fill missing years with zero sales
+$years = array_values($years); // Get sorted years
+foreach ($paymentData as $payment => &$data) {
+    $data = array_replace(array_fill_keys($years, 0), $data); // Ensure all years have a value
+}
+unset($data); // Break reference
 ?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include "sidebar.php";?>
+        <?php include "sidebar.php"; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -53,10 +77,9 @@ $data7 = json_decode($data7, TRUE);
             <div id="content">
 
                 <!-- Begin Page Content -->
-                
                 <div id="linechart" class="grafik"></div>
                 <p class="highcharts-description">
-                Berikut merupakan grafik untuk menampilkan durasi lama pinjam film setiap kategori pada rental film Sakila.
+                    Berikut merupakan grafik untuk menampilkan penjualan berdasarkan metode pembayaran tiap tahunnya.
                 </p>
                 <!-- /.container-fluid -->
             </div>
@@ -66,7 +89,7 @@ $data7 = json_decode($data7, TRUE);
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dashboard WHSakila2021</span>
+                        <span>Copyright &copy; Dashboard WHAdventureWorks</span>
                     </div>
                 </div>
             </footer>
@@ -78,32 +101,24 @@ $data7 = json_decode($data7, TRUE);
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-
+    <!-- Highcharts Script -->
     <script type="text/javascript">
-        //create linechart
         Highcharts.chart('linechart', {
             chart: {
                 type: 'line'
             },
             title: {
-                text: 'Data Lama Pinjam Setiap Kategori Film'
+                text: 'Grafik Penjualan Berdasarkan Metode Pembayaran'
             },
             subtitle: {
                 text: 'Source: Database WHSakila2021'
             },
             xAxis: {
-                categories: [
-                    <?php for ($i=0; $i < count($data7); $i++):?>
-                        <?= $data7[$i]["bulan"]; ?>,
-                    <?php endfor;?>
-                ]
+                categories: <?= json_encode($years); ?> // X-axis years
             },
             yAxis: {
                 title: {
-                    text: 'pinjaman hari ke-'
+                    text: 'Total Penjualan'
                 }
             },
             plotOptions: {
@@ -111,34 +126,25 @@ $data7 = json_decode($data7, TRUE);
                     dataLabels: {
                         enabled: true
                     },
-                    enableMouseTracking: false
+                    enableMouseTracking: true
                 }
             },
             series: [
-                <?php for ($i=0; $i < count($data7); $i+=5):?>
+                <?php foreach ($paymentData as $payment => $data): ?>
                 {
-                name: '<?= $data7[$i]["kategori"]; ?>',
-                data: [
-                    <?php for ($a=$i; $a < $i+5; $a++):?>
-                        <?= $data7[$a]["lamapinjam"]; ?>,
-                    <?php endfor;?>
-                    ]
+                    name: '<?= $payment; ?>',
+                    data: <?= json_encode(array_values($data)); ?> // Data for each payment method
                 },
-                <?php endfor;?>
+                <?php endforeach; ?>
             ]
         });
     </script>
-    <!-- Bootstrap core JavaScript-->
+
+    <!-- Bootstrap core JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/js/sb-admin-2.min.js"></script>
 
-
 </body>
-
 </html>
