@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard WHSakila2021</title>
+    <title>Dashboard WHAdventureWorks</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" type="text/css">
@@ -35,10 +35,8 @@
 <?php 
 //data barchart
 include 'data.php';
-include 'data2.php';
 
 $data = json_decode($data, TRUE);
-$data2 = json_decode($data2, TRUE);
 
 ?>
 
@@ -88,83 +86,58 @@ $data2 = json_decode($data2, TRUE);
     </a>
 
     <script type="text/javascript">
-    // Create the barchart
-        Highcharts.chart('barchart', {
-            chart: {
-                type: 'column'
-            },
+    Highcharts.chart('barchart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Distribusi Penjualan Tiap Kategori Produk di Berbagai Wilayah'
+        },
+        xAxis: {
+            type: 'category',
             title: {
-                text: 'Data Pendapatan Toko Menurut Kota'
-            },
-            subtitle: {
-                text: 'Source: Database WHSakila2021'
-            },
-            accessibility: {
-                announceNewData: {
-                    enabled: true
+                text: 'Wilayah'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Total Penjualan'
+            }
+        },
+        legend: {
+            enabled: true
+        },
+        plotOptions: {
+            column: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}'
                 }
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{point.key}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b><br/>'
+        },
+        series: [
+            <?php 
+            $categories = array();
+            foreach ($data as $item) {
+                $categories[$item['kategori']][] = [
+                    'name' => $item['wilayah'],
+                    'y' => floatval($item['total'])
+                ];
+            }
+            foreach ($categories as $kategori => $values): ?>
+            {
+                name: '<?= $kategori; ?>',
+                data: <?= json_encode($values); ?>
             },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: {
-                title: {
-                    text: 'Pendapatan'
-                }
-            
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.y:.1f}$'
-                    }
-                }
-            },
-        
-            tooltip: {
-                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}$</b> of total<br/>'
-            },
-        
-            series: [
-                {
-                    name: "Kategori",
-                    colorByPoint: true,
-                    data: [
-                        <?php foreach ($data as $data):?>
-                        {
-                            name: '<?= $data["name"]; ?>',
-                            y: <?= $data["total"]; ?>,
-                            drilldown: '<?= $data["name"]; ?>'
-                        },
-                        <?php endforeach;?>
-                    ]
-                }
-            ],
-            drilldown: {
-                series: [
-                    <?php for ($i=0; $i < count($data2); $i+=5):?>
-                    {
-                        name: "<?= $data2[$i]["kategori"]; ?>",
-                        id: "<?= $data2[$i]["kategori"]; ?>",
-                        data: [
-                            <?php for ($a=$i; $a < $i+5; $a++):?>
-                            [
-                                "<?= $data2[$a]["bulan"]; ?>",
-                                <?= floatval($data2[$a]["pendapatan"]); ?>
-                            ],
-                            <?php endfor;?>
-                        ]
-                    },
-                    <?php endfor;?>
-                ]}
-        });
-    </script>
+            <?php endforeach; ?>
+        ]
+    });
+</script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>

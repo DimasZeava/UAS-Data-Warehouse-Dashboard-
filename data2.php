@@ -1,25 +1,23 @@
 <?php
-// require('koneksi.php');
+require('koneksi.php');
 
-// $sql1 = "SELECT s.nama_kota kategori, 
-//         t.bulan as bulan,
-//        sum(fp.amount) as pendapatan 
-//     FROM store s, fakta_pendapatan fp, time t 
-// WHERE (s.store_id = fp.store_id) AND (t.time_id = fp.time_id) 
-// GROUP BY kategori, bulan";
+$sql = "SELECT p.Kategori_Produk kategori, 
+        t.Bulan as bulan,
+       sum(f.Total_Penjualan) as TotalPenjualan 
+    FROM dim_produk p, fakta_penjualan f, dim_waktu t 
+WHERE (p.ID_Produk = f.ID_Produk) AND (t.id_waktu = f.id_waktu) 
+GROUP BY kategori, bulan";
 
-// $result1 = mysqli_query($conn,$sql1);
+$result = mysqli_query($conn, $sql);
 
-// $pendapatan = array();
+$penjualan = array();
 
-// while ($row = mysqli_fetch_array($result1)) {
-//     array_push($pendapatan,array(
-//         "pendapatan"=>$row['pendapatan'],
-//         "bulan" => $row['bulan'],
-//         "kategori" => $row['kategori']
-//     ));
-// }
+while ($row = mysqli_fetch_array($result)) {
+    array_push($penjualan, array(
+        "TotalPenjualan" => $row['TotalPenjualan'],
+        "bulan" => $row['bulan'],
+        "kategori" => $row['kategori']
+    ));
+}
 
-// $data2 = json_encode($pendapatan);
-
-?>
+$data2 = json_encode($penjualan);
