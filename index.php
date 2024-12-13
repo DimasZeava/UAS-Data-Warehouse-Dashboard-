@@ -15,15 +15,12 @@
 <body>
 
   <?php
-  session_start();
-
   if (!empty($_POST)) {
 
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     if ($username == "admin" && $password == "admin") {
-      $_SESSION['username'] = $username;
       header("location:home.php");
     }
   }

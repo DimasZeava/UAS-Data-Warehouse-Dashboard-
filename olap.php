@@ -47,12 +47,10 @@
                 <p class="highcharts-description">
                 Berikut merupakan tampilan OLAP
                 </p>
-                <!-- /.container-fluid -->
                 <br>
                 <iframe name="mondrian" src="http://localhost:8080/mondrian/index.html"></iframe>
                 <br>
             </div>
-            <!-- End of Main Content -->
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">

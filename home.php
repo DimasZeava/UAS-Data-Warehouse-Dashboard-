@@ -14,13 +14,6 @@
     <link rel="stylesheet" href="css/styleGraph.css">
 </head>
 
-<?php
-session_start();
-if (!isset($_SESSION['username'])) {
-    header("location:index.php");
-    exit;
-}
-?>
 
 <body id="page-top">
     <div id="wrapper">
@@ -28,7 +21,7 @@ if (!isset($_SESSION['username'])) {
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <div class="d-flex flex-column">
-                    <h2>Selamat Datang, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
+                    <h2>Selamat Datang!</h2>
                     <p>Apa yang mau anda lihat hari ini?</p>
                 </div>
                 <p>Dashboard ini akan menampilkan beberapa grafik berdasarkan data adventureworks dan juga tampilan OLAP yang di integrasikan dengan Mondrian</p>
