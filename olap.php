@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard WHSakila2021</title>
+    <title>Dashboard WHAdventureWorks</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" type="text/css">
@@ -31,15 +31,6 @@
 
 <body id="page-top">
 
-<?php 
-//data barchart
-include 'data5.php';
-include 'data6.php';
-
-$data5 = json_decode($data5, TRUE);
-$data6 = json_decode($data6, TRUE);
-?>
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -54,11 +45,11 @@ $data6 = json_decode($data6, TRUE);
             <div id="content">
                 <!-- Begin Page Content -->
                 <p class="highcharts-description">
-                Berikut merupakan tampilan OLAP dari rental film Sakila yang di integrasikan dengan Mondrian.
+                Berikut merupakan tampilan OLAP
                 </p>
                 <!-- /.container-fluid -->
                 <br>
-                <iframe name="mondrian" src="http://localhost:8080/mondrian/index_sakila.html"></iframe>
+                <iframe name="mondrian" src="http://localhost:8080/mondrian/index.html"></iframe>
                 <br>
             </div>
             <!-- End of Main Content -->
@@ -67,7 +58,7 @@ $data6 = json_decode($data6, TRUE);
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dashboard WHSakila2021</span>
+                        <span>Copyright &copy; Dashboard WHAdventureWorks</span>
                     </div>
                 </div>
             </footer>

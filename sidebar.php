@@ -46,7 +46,7 @@
 
           <!-- Nav Item - Edit Profile -->
     <li class="nav-item">
-         <a class="nav-link" href="donatchart.php">
+         <a class="nav-link" href="linechart3.php">
          <i class="fas fa-money-bill-alt"></i>
              <span>Persentase Peningkatan Penjualan Tahunan di Berbagai Wilayah</span></a>
      </li>

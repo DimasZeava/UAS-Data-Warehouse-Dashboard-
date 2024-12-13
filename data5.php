@@ -1,23 +1,41 @@
 <?php
-// require('koneksi.php');
+require('koneksi.php');
 
-// $sql = "SELECT f.kategori, 
-//         SUM(p.amount) AS total,
-//         (SUM(p.amount) / (SELECT SUM(amount) FROM fakta_pendapatan)) * 100 AS 'persentase'
-//         FROM film f, fakta_pendapatan p 
-//         WHERE f.film_id = p.film_id GROUP BY f.kategori";
-// $result = mysqli_query($conn,$sql);
+$sql = "SELECT 
+    w.Nama_Wilayah Wilayah, 
+    d.Tahun, 
+    SUM(f.Total_Penjualan) AS TotalPenjualan, 
+    ROUND(
+        CASE 
+            WHEN LAG(SUM(f.Total_Penjualan)) OVER (PARTITION BY w.Nama_Wilayah ORDER BY d.Tahun) IS NULL THEN 0
+            ELSE 
+                (SUM(f.Total_Penjualan) - LAG(SUM(f.Total_Penjualan)) OVER (PARTITION BY w.Nama_Wilayah ORDER BY d.Tahun)) / 
+                LAG(SUM(f.Total_Penjualan)) OVER (PARTITION BY w.Nama_Wilayah ORDER BY d.Tahun) * 100
+        END, 2
+    ) AS PersentasePeningkatan
+FROM 
+    Fakta_Penjualan f
+JOIN 
+    dim_Wilayah w ON f.ID_Wilayah = w.ID_Wilayah
+JOIN 
+    dim_Waktu d ON f.ID_Waktu = d.ID_Waktu
+GROUP BY 
+    w.Nama_Wilayah, d.Tahun
+ORDER BY 
+    d.Tahun;
+";
 
-// $hasil = array();
+$result = mysqli_query($conn, $sql);
 
-// while ($row = mysqli_fetch_array($result)) {
-//     array_push($hasil,array(
-//         "name"=>$row['kategori'],
-//         "total"=>$row['total'],
-//         "y"=>$row['persentase']
-//     ));
-// }
+$hasil = array();
 
-// $data5 = json_encode($hasil);
+while ($row = mysqli_fetch_assoc($result)) {
+    array_push($hasil, array(
+        "Wilayah" => $row['Wilayah'],
+        "Tahun" => $row['Tahun'],
+        "TotalPenjualan" => $row['TotalPenjualan'],
+        "PersentasePeningkatan" => $row['PersentasePeningkatan']
+    ));
+}
 
-?>
+$data5 = json_encode($hasil);

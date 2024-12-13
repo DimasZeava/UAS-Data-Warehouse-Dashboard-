@@ -37,7 +37,6 @@ include 'data5.php';
 include 'data6.php';
 
 $data5 = json_decode($data5, TRUE);
-$data6 = json_decode($data6, TRUE);
 ?>
 
     <!-- Page Wrapper -->
@@ -85,75 +84,74 @@ $data6 = json_decode($data6, TRUE);
     </a>
 
     <script type="text/javascript">
-        //create linechart
-        Highcharts.chart('container', {
-            chart: {
-                type: 'pie'
-            },
+    // Persiapkan data seri dari PHP
+    const dataWilayah = <?php echo json_encode($data5); ?>;
+
+    // Proses data menjadi format untuk Highcharts
+    const seriesData = {};
+
+    dataWilayah.forEach(item => {
+        const wilayah = item.Wilayah;
+        const tahun = item.Tahun;
+        const persen = parseFloat(item.PersentasePeningkatan) || 0;
+
+        if (!seriesData[wilayah]) {
+            seriesData[wilayah] = [];
+        }
+        seriesData[wilayah].push([tahun, persen]);
+    });
+
+    const series = Object.keys(seriesData).map(wilayah => ({
+        name: wilayah,
+        data: seriesData[wilayah].sort((a, b) => a[0] - b[0]) // Urutkan data berdasarkan tahun
+    }));
+
+    // Render line chart
+    Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Persentase Peningkatan Penjualan Tahunan di Berbagai Wilayah'
+        },
+        subtitle: {
+            text: 'Source: Database WHAdventureWorks'
+        },
+        xAxis: {
             title: {
-                text: 'Data Pendapatan dari Setiap Kategori'
+                text: 'Tahun'
             },
-            subtitle: {
-                text: 'Source: Database WHSakila2021'
+            type: 'category',
+            labels: {
+                format: '{value}'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Persentase Peningkatan (%)'
             },
-        
-            accessibility: {
-                announceNewData: {
-                    enabled: true
-                },
-                point: {
-                    valueSuffix: '%'
+            labels: {
+                format: '{value}%'
+            }
+        },
+        tooltip: {
+            shared: true,
+            crosshairs: true,
+            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>'
+        },
+        series: series,
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.2f}%'
                 }
-            },
-        
-            plotOptions: {
-                series: {
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}: {point.y:.1f}%'
-                    }
-                }
-            },
-        
-            tooltip: {
-                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-            },
-        
-            series: [
-                {
-                    name: "Kategori",
-                    colorByPoint: true,
-                    data: [
-                        <?php foreach ($data5 as $data):?>
-                        {
-                            name: '<?= $data["name"]; ?>',
-                            y: <?= $data["y"]; ?>,
-                            drilldown: '<?= $data["name"]; ?>'
-                        },
-                        <?php endforeach;?>
-                    ]
-                }
-            ],
-            drilldown: {
-                series: [
-                    <?php for ($i=0; $i < count($data6); $i+=5):?>
-                    {
-                        name: "<?= $data6[$i]["kategori"]; ?>",
-                        id: "<?= $data6[$i]["kategori"]; ?>",
-                        data: [
-                            <?php for ($a=$i; $a < $i+5; $a++):?>
-                            [
-                                "<?= $data6[$a]["bulan"]; ?>",
-                                <?= floatval($data6[$a]["persen"]); ?>
-                            ],
-                            <?php endfor;?>
-                        ]
-                    },
-                    <?php endfor;?>
-                ]}
-        });
-    </script>
+            }
+        }
+    });
+</script>
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
