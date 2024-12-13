@@ -19,7 +19,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/css/sb-admin-2.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styleGraph.css">
-    
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
@@ -35,7 +35,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include "sidebar.php";?>
+        <?php include "sidebar.php"; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -45,10 +45,10 @@
             <div id="content">
                 <!-- Begin Page Content -->
                 <p class="highcharts-description">
-                Berikut merupakan tampilan OLAP
+                    Berikut merupakan tampilan OLAP
                 </p>
                 <br>
-                <iframe name="mondrian" src="http://localhost:8080/mondrian/index.html"></iframe>
+                <iframe name="mondrian" src="http://localhost:8080/mondrian/whadventureworks.html"/></iframe>
                 <br>
             </div>
 
