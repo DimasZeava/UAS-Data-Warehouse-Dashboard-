@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard WHSakila2021</title>
+    <title>Dashboard WHAdventureWorks</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,7 +19,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/css/sb-admin-2.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styleGraph.css">
-    
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
@@ -31,19 +31,19 @@
 
 <body id="page-top">
 
-<?php 
-//data barchart
-include 'data4.php';
+    <?php
+    //data barchart
+    include 'data4.php';
 
-$data4 = json_decode($data4, TRUE);
+    $data4 = json_decode($data4, TRUE);
 
-?>
+    ?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include "sidebar.php";?>
+        <?php include "sidebar.php"; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -53,10 +53,10 @@ $data4 = json_decode($data4, TRUE);
             <div id="content">
 
                 <!-- Begin Page Content -->
-                
+
                 <div id="barchart2" class="grafik"></div>
                 <p class="highcharts-description">
-                Berikut merupakan grafik untuk menampilkan data jumlah customer dari setiap kategori film pada rental film Sakila.
+                    Berikut merupakan grafik untuk menampilkan data jumlah tipe pelanggan. I adalah Tipe individual sedangakan S adalah Tipe Store. Data yang ditunjukkan dari tahun 2002 - 2004.
                 </p>
                 <!-- /.container-fluid -->
 
@@ -98,10 +98,13 @@ $data4 = json_decode($data4, TRUE);
             },
             xAxis: {
                 categories: [
-                    <?php for ($i=0; $i < 5; $i++):?>
-                        '<?= $data4[$i]["bulan"]; ?>',
-                    <?php endfor;?>
-            ],
+                    <?php
+                    $bulan = array_unique(array_column($data4, "bulan"));
+                    foreach ($bulan as $item) {
+                        echo "'$item',";
+                    }
+                    ?>
+                ],
                 crosshair: true
             },
             yAxis: {
@@ -113,7 +116,7 @@ $data4 = json_decode($data4, TRUE);
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.f} orang</b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.0f} orang</b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -124,20 +127,18 @@ $data4 = json_decode($data4, TRUE);
                     borderWidth: 0
                 }
             },
-                series: [
-                    <?php for ($i=0; $i < count($data4); $i+=5):?>
-                    {
-                        name: '<?= $data4[$i]["kategori"]; ?>',
-                        data: [
-                            <?php for ($a=$i; $a < $i+5; $a++):?>
-                            [
-                                <?= intval($data4[$a]["pelanggan"]); ?>,
-                            ],
-                            <?php endfor;?>
-                        ]
-                    },
-                    <?php endfor;?>
-                    ]
+            series: [
+                <?php
+                $kategori = array_unique(array_column($data4, "kategori"));
+                foreach ($kategori as $kat) {
+                    $dataPerKategori = array_filter($data4, function ($item) use ($kat) {
+                        return $item["kategori"] === $kat;
+                    });
+                    $dataPoints = array_column($dataPerKategori, "pelanggan");
+                    echo "{ name: '$kat', data: [" . implode(",", $dataPoints) . "] },";
+                }
+                ?>
+            ]
         });
     </script>
     <!-- Bootstrap core JavaScript-->
