@@ -34,7 +34,6 @@
 <?php 
 //data barchart
 include 'data5.php';
-include 'data6.php';
 
 $data5 = json_decode($data5, TRUE);
 ?>
