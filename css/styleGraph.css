@@ -115,22 +115,6 @@ iframe{
     background: #f1f7ff;
   }
 
-  h2 { 
-    display: block;
-    margin-top: 200px;
-    margin-bottom: 1em;
-    margin-left: 100px;
-    margin-right: 0;
-    font-weight: bold;
-  }
-
-  p{
-    margin-top: 50px;
-    margin-bottom: 1em;
-    margin-left: 100px;
-    margin-right: 0;
-  }
-
   .grafik{
     margin-top: 50px;
     margin-left: 100px;
