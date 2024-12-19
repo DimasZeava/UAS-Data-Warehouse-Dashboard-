@@ -22,5 +22,5 @@ Langkah-langkah yang dibutuhkan untuk menjalankan app dengan baik :
 6. Buka phpMyAdmin (localhost/phpmyadmin).
 7. Buat database dengan nama whadventureworks.
 8. Import file whadventureworks.sql ke dalam database whadventureworks.
-9. (Untuk mondrian masih belum selesai) Download dan Extract mondrian_18082010028.zip dari link https://bit.ly/mondrianwhsakilaanashaq ke dalam server Tomcat bawaan dari XAMPP (xampp/tomcat/webapps).
-10. Jalankan aplikasi dengan mengakses http://localhost/FP_DWO_KELOMPOK_1
+9. Download dan Extract mondrian ke dalam server Tomcat bawaan dari XAMPP (xampp/tomcat/webapps).
+10. Jalankan aplikasi dengan mengakses http://localhost/DWO-KELOMPOK1
