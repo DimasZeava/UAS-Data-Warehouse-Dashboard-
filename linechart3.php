@@ -19,7 +19,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/css/sb-admin-2.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styleGraph.css">
-    
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
@@ -31,18 +31,18 @@
 
 <body id="page-top">
 
-<?php 
-//data barchart
-include 'data5.php';
+    <?php
+    //data barchart
+    include 'data5.php';
 
-$data5 = json_decode($data5, TRUE);
-?>
+    $data5 = json_decode($data5, TRUE);
+    ?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include "sidebar.php";?>
+        <?php include "sidebar.php"; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -52,11 +52,10 @@ $data5 = json_decode($data5, TRUE);
             <div id="content">
 
                 <!-- Begin Page Content -->
-                
-                <div id="container" class="grafik"></div>
                 <p class="highcharts-description">
-                Berikut merupakan grafik untuk menampilkan kategori film terlaris pada rental film Sakila.
+                    Berikut merupakan persentase peningkatan penjualan tahunan di berbagai wilayah pada data AdventureWorks.
                 </p>
+                <div id="container" class="grafik"></div>
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
@@ -65,7 +64,7 @@ $data5 = json_decode($data5, TRUE);
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dashboard WHSakila2021</span>
+                        <span>Copyright &copy; Dashboard AdventureWorks</span>
                     </div>
                 </div>
             </footer>
@@ -83,72 +82,72 @@ $data5 = json_decode($data5, TRUE);
     </a>
 
     <script type="text/javascript">
-    // Persiapkan data seri dari PHP
-    const dataWilayah = <?php echo json_encode($data5); ?>;
+        // Persiapkan data seri dari PHP
+        const dataWilayah = <?php echo json_encode($data5); ?>;
 
-    // Proses data menjadi format untuk Highcharts
-    const seriesData = {};
+        // Proses data menjadi format untuk Highcharts
+        const seriesData = {};
 
-    dataWilayah.forEach(item => {
-        const wilayah = item.Wilayah;
-        const tahun = item.Tahun;
-        const persen = parseFloat(item.PersentasePeningkatan) || 0;
+        dataWilayah.forEach(item => {
+            const wilayah = item.Wilayah;
+            const tahun = item.Tahun;
+            const persen = parseFloat(item.PersentasePeningkatan) || 0;
 
-        if (!seriesData[wilayah]) {
-            seriesData[wilayah] = [];
-        }
-        seriesData[wilayah].push([tahun, persen]);
-    });
-
-    const series = Object.keys(seriesData).map(wilayah => ({
-        name: wilayah,
-        data: seriesData[wilayah].sort((a, b) => a[0] - b[0]) // Urutkan data berdasarkan tahun
-    }));
-
-    // Render line chart
-    Highcharts.chart('container', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Persentase Peningkatan Penjualan Tahunan di Berbagai Wilayah'
-        },
-        subtitle: {
-            text: 'Source: Database WHAdventureWorks'
-        },
-        xAxis: {
-            title: {
-                text: 'Tahun'
-            },
-            type: 'category',
-            labels: {
-                format: '{value}'
+            if (!seriesData[wilayah]) {
+                seriesData[wilayah] = [];
             }
-        },
-        yAxis: {
-            title: {
-                text: 'Persentase Peningkatan (%)'
+            seriesData[wilayah].push([tahun, persen]);
+        });
+
+        const series = Object.keys(seriesData).map(wilayah => ({
+            name: wilayah,
+            data: seriesData[wilayah].sort((a, b) => a[0] - b[0]) // Urutkan data berdasarkan tahun
+        }));
+
+        // Render line chart
+        Highcharts.chart('container', {
+            chart: {
+                type: 'line'
             },
-            labels: {
-                format: '{value}%'
-            }
-        },
-        tooltip: {
-            shared: true,
-            crosshairs: true,
-            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>'
-        },
-        series: series,
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{y:.2f}%'
+            title: {
+                text: 'Persentase Peningkatan Penjualan Tahunan di Berbagai Wilayah'
+            },
+            subtitle: {
+                text: 'Source: Database WHAdventureWorks'
+            },
+            xAxis: {
+                title: {
+                    text: 'Tahun'
+                },
+                type: 'category',
+                labels: {
+                    format: '{value}'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Persentase Peningkatan (%)'
+                },
+                labels: {
+                    format: '{value}%'
+                }
+            },
+            tooltip: {
+                shared: true,
+                crosshairs: true,
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}%</b><br/>'
+            },
+            series: series,
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '{y:.2f}%'
+                    }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
 
 
     <!-- Bootstrap core JavaScript-->

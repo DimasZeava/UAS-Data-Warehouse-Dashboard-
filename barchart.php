@@ -20,7 +20,7 @@
 
     <link rel="stylesheet" href="css/styleGraph.css">
 
-    
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
@@ -32,19 +32,19 @@
 
 <body id="page-top">
 
-<?php 
-//data barchart
-include 'data.php';
+    <?php
+    //data barchart
+    include 'data.php';
 
-$data = json_decode($data, TRUE);
+    $data = json_decode($data, TRUE);
 
-?>
+    ?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include "sidebar.php";?>
+        <?php include "sidebar.php"; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -54,11 +54,11 @@ $data = json_decode($data, TRUE);
             <div id="content">
 
                 <!-- Begin Page Content -->
-                
-                <div id="barchart" class="grafik"></div>
                 <p class="highcharts-description">
-                Berikut merupakan grafik untuk menampilkan total penjualan setiap tahunnya pada data AdventureWorks.
+                    Berikut merupakan grafik untuk menampilkan total penjualan di berbagai wilayah pada data AdventureWorks.
                 </p>
+                <div id="barchart" class="grafik"></div>
+
                 <!-- /.container-fluid -->
 
             </div>
@@ -86,57 +86,56 @@ $data = json_decode($data, TRUE);
     </a>
 
     <script type="text/javascript">
-    Highcharts.chart('barchart', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Distribusi Penjualan Tiap Kategori Produk di Berbagai Wilayah'
-        },
-        xAxis: {
-            type: 'category',
-            title: {
-                text: 'Wilayah'
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Total Penjualan'
-            }
-        },
-        legend: {
-            enabled: true
-        },
-        plotOptions: {
-            column: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.1f}'
-                }
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:11px">{point.key}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b><br/>'
-        },
-        series: [
-            <?php 
-            $categories = array();
-            foreach ($data as $item) {
-                $categories[$item['kategori']][] = [
-                    'name' => $item['wilayah'],
-                    'y' => floatval($item['total'])
-                ];
-            }
-            foreach ($categories as $kategori => $values): ?>
-            {
-                name: '<?= $kategori; ?>',
-                data: <?= json_encode($values); ?>
+        Highcharts.chart('barchart', {
+            chart: {
+                type: 'column'
             },
-            <?php endforeach; ?>
-        ]
-    });
-</script>
+            title: {
+                text: 'Distribusi Penjualan Tiap Kategori Produk di Berbagai Wilayah'
+            },
+            xAxis: {
+                type: 'category',
+                title: {
+                    text: 'Wilayah'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Total Penjualan'
+                }
+            },
+            legend: {
+                enabled: true
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y:.1f}'
+                    }
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{point.key}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b><br/>'
+            },
+            series: [
+                <?php
+                $categories = array();
+                foreach ($data as $item) {
+                    $categories[$item['kategori']][] = [
+                        'name' => $item['wilayah'],
+                        'y' => floatval($item['total'])
+                    ];
+                }
+                foreach ($categories as $kategori => $values): ?> {
+                        name: '<?= $kategori; ?>',
+                        data: <?= json_encode($values); ?>
+                    },
+                <?php endforeach; ?>
+            ]
+        });
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

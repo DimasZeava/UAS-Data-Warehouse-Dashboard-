@@ -53,11 +53,12 @@
             <div id="content">
 
                 <!-- Begin Page Content -->
-
-                <div id="barchart2" class="grafik"></div>
                 <p class="highcharts-description">
-                    Berikut merupakan grafik untuk menampilkan data jumlah tipe pelanggan. I adalah Tipe individual sedangakan S adalah Tipe Store. Data yang ditunjukkan dari tahun 2002 - 2004.
+                    Berikut merupakan grafik untuk menampilkan data jumlah tipe pelanggan pada data AdventureWorks.<br /> 
+                    I adalah Tipe individual sedangn S adalah Tipe Store. <br /> 
+                    Data yang ditunjukkan dari tahun 2002 - 2004.
                 </p>
+                <div id="barchart2" class="grafik"></div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -67,7 +68,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dashboard WHSakila2021</span>
+                        <span>Copyright &copy; Dashboard AdventureWorks</span>
                     </div>
                 </div>
             </footer>

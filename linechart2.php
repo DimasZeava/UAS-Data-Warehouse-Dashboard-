@@ -30,38 +30,38 @@
 
 <body id="page-top">
 
-<?php 
-include 'data7.php';
+    <?php
+    include 'data7.php';
 
-// Decode JSON data from `data7.php`
-$data7 = json_decode($data7, TRUE);
+    // Decode JSON data from `data7.php`
+    $data7 = json_decode($data7, TRUE);
 
-// Check if data is valid
-if (!$data7) {
-    echo '<p>Data tidak valid atau tidak tersedia.</p>';
-    exit;
-}
+    // Check if data is valid
+    if (!$data7) {
+        echo '<p>Data tidak valid atau tidak tersedia.</p>';
+        exit;
+    }
 
-// Prepare data for the chart
-$years = [];
-$paymentData = [];
+    // Prepare data for the chart
+    $years = [];
+    $paymentData = [];
 
-foreach ($data7 as $entry) {
-    $year = $entry['Tahun'];
-    $payment = $entry['Pembayaran'];
-    $total = $entry['TotalPenjualan'];
+    foreach ($data7 as $entry) {
+        $year = $entry['Tahun'];
+        $payment = $entry['Pembayaran'];
+        $total = $entry['TotalPenjualan'];
 
-    $years[$year] = $year; // Collect unique years
-    $paymentData[$payment][$year] = (float)$total; // Store total sales by payment method and year
-}
+        $years[$year] = $year; // Collect unique years
+        $paymentData[$payment][$year] = (float)$total; // Store total sales by payment method and year
+    }
 
-// Fill missing years with zero sales
-$years = array_values($years); // Get sorted years
-foreach ($paymentData as $payment => &$data) {
-    $data = array_replace(array_fill_keys($years, 0), $data); // Ensure all years have a value
-}
-unset($data); // Break reference
-?>
+    // Fill missing years with zero sales
+    $years = array_values($years); // Get sorted years
+    foreach ($paymentData as $payment => &$data) {
+        $data = array_replace(array_fill_keys($years, 0), $data); // Ensure all years have a value
+    }
+    unset($data); // Break reference
+    ?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -77,10 +77,11 @@ unset($data); // Break reference
             <div id="content">
 
                 <!-- Begin Page Content -->
-                <div id="linechart" class="grafik"></div>
                 <p class="highcharts-description">
-                    Berikut merupakan grafik untuk menampilkan penjualan berdasarkan metode pembayaran tiap tahunnya.
+                    Berikut merupakan grafik untuk menampilkan penjualan berdasarkan metode pembayaran tiap tahunnya pada data AdventureWorks.
                 </p>
+                <div id="linechart" class="grafik"></div>
+
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
@@ -130,11 +131,10 @@ unset($data); // Break reference
                 }
             },
             series: [
-                <?php foreach ($paymentData as $payment => $data): ?>
-                {
-                    name: '<?= $payment; ?>',
-                    data: <?= json_encode(array_values($data)); ?> // Data for each payment method
-                },
+                <?php foreach ($paymentData as $payment => $data): ?> {
+                        name: '<?= $payment; ?>',
+                        data: <?= json_encode(array_values($data)); ?> // Data for each payment method
+                    },
                 <?php endforeach; ?>
             ]
         });
@@ -147,4 +147,5 @@ unset($data); // Break reference
     <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/js/sb-admin-2.min.js"></script>
 
 </body>
+
 </html>
